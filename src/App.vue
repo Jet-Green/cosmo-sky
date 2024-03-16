@@ -6,14 +6,14 @@ import * as THREE from 'three';
 
 
 onMounted(() => {
-
   const scene = new THREE.Scene();
 
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
 
   // camera.position.z = -0.01
   // camera.position.x = -0.0002
-  camera.position.y = 50
+  // camera.position.z = 50
+  camera.lookAt(0, 0, 0)
 
   const renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector('#bg'),
@@ -22,7 +22,7 @@ onMounted(() => {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  // camera.position.setZ(30)
+  camera.position.setZ(document.body.getBoundingClientRect().top)
 
 
   // const geometry = new THREE.TorusGeometry(10, 3, 16, 100)
@@ -47,13 +47,13 @@ onMounted(() => {
     const geometry = new THREE.SphereGeometry(0.2, 24, 24)
     const material = new THREE.MeshStandardMaterial({ color: 0xffffff })
     const star = new THREE.Mesh(geometry, material)
-    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(200))
+    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(300))
 
     star.position.set(x, y, z)
     scene.add(star)
   }
 
-  for (let i = 0; i < 300; i++) {
+  for (let i = 0; i < 400; i++) {
     addStar()
   }
   // const spaceTexture = new THREE.TextureLoader().load('assets/images/space.jpg')
@@ -62,9 +62,9 @@ onMounted(() => {
   function moveCamera() {
     const t = document.body.getBoundingClientRect().top
     gsap.to(camera.position, {
-      x: t * -0.0002,
-      y: t * 0.02,
-      z: t * -0.01,
+      // x: t * -0.0002,
+      // y: t * 0.02,
+      z: t * -0.05,
       duration: 2,
       ease: 'power3.out'
     })
